@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Article List</h1>
+    <br>
+        <div class="accordion" id="accordionExample">
+            {% for blog in blogs %}
+            <div class="card">
+                <div class="card-header" id="heading{{ blog.id }}">
+                    <h5>
+                        <form action="/article/{{ blog.id }}" method="post" style="display: inline">
+                            <input type="hidden" name="id" value="{{ blog.id }}">
+                            <button type="submit" style="outline: none; background: none; border: none" class="btn-link">{{ blog.title }}</button>
+                        </form>
+
+                        <span style="float: right" type="button" data-toggle="collapse" data-target="#collapse{{ blog.id }}" aria-expanded="true" aria-controls="collapse{{ blog.id }}">
+                            •••
+                        </span>
+                    </h5>
+                    <img src="./picture_uploaded/{{ blog.img }}" style="width: 100%; height: 400px; object-fit: cover;">
+                </div>
+                <div id="collapse{{ blog.id }}" class="collapse" data-parent="#accordionExample">
+                    <div class="card-body" style="display: inline-flex">
+                        <form action="/editBlog/{{ blog.id }}" method="post" style="margin-right: 10px">
+                            <input type="hidden" name="id" value="{{ blog.id }}">
+                            <button type="submit" class="btn btn-outline-secondary">Edit</button>
+                        </form>
+                        <form action="/removeBlog/{{ blog.id }}" method="post" style="margin-right: 10px">
+                            <input type="hidden" name="token" value="{{ csrf_token('token'~blog.id) }}"/>
+                            <button type="submit" class="btn btn-outline-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    <br>
+    <a href="/addBlog"><button class="btn btn-outline-primary">Add new article</button></a>
+    <br><br>
+{% endblock %}

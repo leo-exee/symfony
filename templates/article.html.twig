@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="/">< Home</a>
+    <br>
+    <h2 style="text-align: center">{{ blog.title }}</h2>
+    <br>
+    <p><i>Last modified : {{ date }}</i></p>
+    <br>
+    <p>{{ blog.content }}</p>
+    {% if blog.img %}
+        <img style="width: 100%" src="../picture_uploaded/{{ blog.id }}.jpg">
+    {% endif %}
+    <br><br>
+    <hr>
+    <h2 style="text-align: center">Comment</h2>
+    <div class="form-group">
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <input value="{{ id }}" name="id" type="hidden">
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+        {{ form_end(form) }}
+        <br><br>
+    </div>
+    <hr>
+    {% for comment in comments %}
+        <h4><i style="font-weight: 300">Comment by</i> {{ comment.name }}</h4>
+        {{ comment.comment }}
+        <form action="/removeComment/{{ comment.id }}" method="post" style="margin-right: 10px">
+            <input value="{{ id }}" name="id" type="hidden">
+            <input type="hidden" name="token" value="{{ csrf_token('token'~comment.id) }}"/>
+            <button type="submit" style="color:red; float: right" class="btn btn-link"><i>Remove</i></button>
+        </form>
+        <br>
+        <hr>
+    {% endfor %}
+
+    <br><br>
+{% endblock %}

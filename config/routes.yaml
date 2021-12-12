@@ -1,3 +1,23 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\HomeController::index
+
+addBlog:
+    path: /addBlog
+    controller: App\Controller\BlogController::addBlog
+
+editBlog:
+    path: /editBlog/{id}
+    controller: App\Controller\BlogController::editBlog
+
+removeBlog:
+    path: /removeBlog/{id}
+    controller: App\Controller\BlogController::removeBlog
+
+article{id}:
+    path: /article/{id}
+    controller: App\Controller\BlogController::article
+
+removeComment:
+    path: /removeComment/{id}
+    controller: App\Controller\CommentController::removeComment
